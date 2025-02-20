@@ -100,16 +100,12 @@ def health_recommendations(glucose, bmi, age):
     if age > 45:
         recommendations.append("Schedule regular check-ups to monitor your diabetes risk.")
     return recommendations
-# HEALTH RECOMMENDATIONS DISPLAY
-if st.button('Predict Diabetes', key='predict_button_2'):
-    prediction, probability = predict_diabetes(new_patient_data)
 
-    st.write(f"### Prediction: {'🟢 Negative' if prediction == 0 else '🔴 Positive'}")
-    st.write(f"#### Probability of diabetes: {probability:.2f}")
-
-    # Health Recommendations
+# Descriptive Button for Health Recommendations
+st.write("### Health Recommendations:")
+st.write("Here are some health recommendations based on your prediction:")
+if st.button('Show Health Recommendations', key='health_recommendations_button'):
     recommendations = health_recommendations(glucose, bmi, age)
-    st.write("### Health Recommendations:")
     for rec in recommendations:
         st.write(f"- {rec}")
         
@@ -124,23 +120,12 @@ def explain_risk(glucose, bmi, age):
         explanation += "\n- Being older increases the risk of diabetes."
     return explanation
 
-if st.button('Predict Diabetes', key='predict_button_3'):
-    prediction, probability = predict_diabetes(new_patient_data)
-
-    st.write(f"### Prediction: {'🟢 Negative' if prediction == 0 else '🔴 Positive'}")
-    st.write(f"#### Probability of diabetes: {probability:.2f}")
-
-    # Risk Explanation
+# Descriptive Button for Risk Explanation
+st.write("### Risk Explanation:")
+st.write("What are the risks for you? Learn what factors contribute to your diabetes risk.")
+if st.button('Show Risk Explanation', key='risk_explanation_button'):
     explanation = explain_risk(glucose, bmi, age)
-    st.write("### Risk Explanation:")
     st.write(explanation)
-
-
-# HISTORICAL DATA TRACKING
-user_name = st.text_input('Enter your name:')
-if user_name:
-    st.write(f"Hello, {user_name}!")
-    # Add functionality to save results (e.g., using a database or a file)
 
 # COMPARISON TO MEDICAL GUIDELINES
 def compare_to_medical_guidelines(glucose, bmi, age):
@@ -154,14 +139,10 @@ def compare_to_medical_guidelines(glucose, bmi, age):
         comparison.append(f"BMI of {bmi} is outside the normal range of {bmi_range}.")
     return comparison
 
-if st.button('Predict Diabetes', key='predict_button_4'):
-    prediction, probability = predict_diabetes(new_patient_data)
-
-    st.write(f"### Prediction: {'🟢 Negative' if prediction == 0 else '🔴 Positive'}")
-    st.write(f"#### Probability of diabetes: {probability:.2f}")
-
-    # Comparison to Medical Guidelines
+# Descriptive Button for Medical Guidelines Comparison
+st.write("### Comparison to Medical Guidelines:")
+st.write("Do you want to compare your prediction to medical guidelines?")
+if st.button('Compare to Medical Guidelines', key='medical_guidelines_button'):
     comparison = compare_to_medical_guidelines(glucose, bmi, age)
-    st.write("### Comparison to Medical Guidelines:")
     for c in comparison:
         st.write(f"- {c}")
