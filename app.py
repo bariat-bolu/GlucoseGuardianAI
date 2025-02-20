@@ -88,3 +88,81 @@ plt.title('Impact of Glucose Levels on Diabetes Risk')
 plt.xlabel('Diabetes Outcome (0: Negative, 1: Positive)')
 plt.ylabel('Glucose Level')
 st.pyplot(plt.gcf())  # Fix: Ensuring correct figure is passed
+
+# HEALTH RECCOMENDATIONS
+def health_recommendations(glucose, bmi, age):
+    recommendations = []
+    if glucose > 140:
+        recommendations.append("Consider reducing your sugar intake and consulting with a healthcare provider.")
+        recommendations.append("Engage in regular exercise, such as walking, for better blood sugar control.")
+    if bmi > 30:
+        recommendations.append("Consider a balanced diet and regular exercise to achieve a healthier BMI.")
+    if age > 45:
+        recommendations.append("Schedule regular check-ups to monitor your diabetes risk.")
+    return recommendations
+# HEALTH RECCOMENDATIONS DISPLAY
+if st.button('Predict Diabetes'):
+    prediction, probability = predict_diabetes(new_patient_data)
+
+    st.write(f"### Prediction: {'🟢 Negative' if prediction == 0 else '🔴 Positive'}")
+    st.write(f"#### Probability of diabetes: {probability:.2f}")
+
+    # Health Recommendations
+    recommendations = health_recommendations(glucose, bmi, age)
+    st.write("### Health Recommendations:")
+    for rec in recommendations:
+        st.write(f"- {rec}")
+        
+# RISK EXPLANATION
+def explain_risk(glucose, bmi, age):
+    explanation = "The prediction is influenced by the following factors:"
+    if glucose > 140:
+        explanation += "\n- High glucose levels contribute significantly to diabetes risk."
+    if bmi > 30:
+        explanation += "\n- Higher BMI indicates a higher likelihood of developing diabetes."
+    if age > 45:
+        explanation += "\n- Being older increases the risk of diabetes."
+    return explanation
+
+if st.button('Predict Diabetes'):
+    prediction, probability = predict_diabetes(new_patient_data)
+
+    st.write(f"### Prediction: {'🟢 Negative' if prediction == 0 else '🔴 Positive'}")
+    st.write(f"#### Probability of diabetes: {probability:.2f}")
+
+    # Risk Explanation
+    explanation = explain_risk(glucose, bmi, age)
+    st.write("### Risk Explanation:")
+    st.write(explanation)
+
+
+# HISTORICAL DATA TRACKING
+user_name = st.text_input('Enter your name:')
+if user_name:
+    st.write(f"Hello, {user_name}!")
+    # Add functionality to save results (e.g., using a database or a file)
+
+# COMPARISON TO MEDICAL GUIDELINES
+def compare_to_medical_guidelines(glucose, bmi, age):
+    glucose_range = (70, 140)
+    bmi_range = (18.5, 24.9)
+
+    comparison = []
+    if glucose < glucose_range[0] or glucose > glucose_range[1]:
+        comparison.append(f"Glucose level of {glucose} is outside the normal range of {glucose_range}.")
+    if bmi < bmi_range[0] or bmi > bmi_range[1]:
+        comparison.append(f"BMI of {bmi} is outside the normal range of {bmi_range}.")
+    return comparison
+
+if st.button('Predict Diabetes'):
+    prediction, probability = predict_diabetes(new_patient_data)
+
+    st.write(f"### Prediction: {'🟢 Negative' if prediction == 0 else '🔴 Positive'}")
+    st.write(f"#### Probability of diabetes: {probability:.2f}")
+
+    # Comparison to Medical Guidelines
+    comparison = compare_to_medical_guidelines(glucose, bmi, age)
+    st.write("### Comparison to Medical Guidelines:")
+    for c in comparison:
+        st.write(f"- {c}")
+
