@@ -1,7 +1,4 @@
 import streamlit as st
-
-st.title("Glucose Guardian AI")
-st.write("Welcome to the diabetes prediction app!")
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -9,9 +6,11 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
-import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+st.title("Glucose Guardian AI")
+st.write("Welcome to the diabetes prediction app!")
 
 # Adding dataset
 url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
@@ -43,7 +42,6 @@ def predict_diabetes(patient_data):
     return prediction[0], probability
 
 # Streamlit UI
-st.title("Diabetes Prediction App")
 st.write("This machine learning-powered app predicts diabetes risk based on blood glucose levels and other health parameters.")
 
 # User input fields
@@ -64,30 +62,29 @@ if st.button('Predict Diabetes'):
     prediction, probability = predict_diabetes(new_patient_data)
 
     # Display results
-    st.write(f"Prediction: {'Positive' if prediction == 1 else 'Negative'}")
-    st.write(f"Probability of diabetes: {probability:.2f}")
+    st.write(f"### Prediction: {'🟢 Negative' if prediction == 0 else '🔴 Positive'}")
+    st.write(f"#### Probability of diabetes: {probability:.2f}")
 
-    # Visualize the feature importance
+    # Feature Importance Visualization
     feature_importance = pd.DataFrame({
         "feature": X.columns,
         "importance": pipeline.named_steps['classifier'].feature_importances_
     }).sort_values("importance", ascending=False)
 
     st.write("### Feature Importance:")
-    st.bar_chart(feature_importance.set_index("feature")["importance"])
+    st.bar_chart(feature_importance.set_index("feature"))
 
     # Display Correlation Heatmap
     st.write("### Correlation Heatmap of Features:")
     plt.figure(figsize=(12, 10))
     sns.heatmap(data.corr(), annot=True, cmap='coolwarm', linewidths=0.5)
-    st.pyplot()
+    st.pyplot(plt.gcf())  # Fix: Ensuring correct figure is passed
 
-# Optionally, add more visualizations or explanations
+# Additional Visualization: Glucose Levels & Diabetes Risk
 st.write("### Impact of Glucose Levels on Diabetes Risk:")
 plt.figure(figsize=(10, 6))
 sns.boxplot(x='outcome', y='glucose', data=data)
 plt.title('Impact of Glucose Levels on Diabetes Risk')
 plt.xlabel('Diabetes Outcome (0: Negative, 1: Positive)')
 plt.ylabel('Glucose Level')
-st.pyplot()
-
+st.pyplot(plt.gcf())  # Fix: Ensuring correct figure is passed
