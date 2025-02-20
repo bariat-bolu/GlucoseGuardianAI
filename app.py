@@ -58,7 +58,7 @@ age = st.number_input('Age', min_value=18, max_value=100, value=50)
 new_patient_data = [pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, diabetes_pedigree_function, age]
 
 # Get prediction and probability
-if st.button('Predict Diabetes'):
+if st.button('Predict Diabetes', key='predict_button_1'):
     prediction, probability = predict_diabetes(new_patient_data)
 
     # Display results
@@ -89,7 +89,7 @@ plt.xlabel('Diabetes Outcome (0: Negative, 1: Positive)')
 plt.ylabel('Glucose Level')
 st.pyplot(plt.gcf())  # Fix: Ensuring correct figure is passed
 
-# HEALTH RECCOMENDATIONS
+# HEALTH RECOMMENDATIONS
 def health_recommendations(glucose, bmi, age):
     recommendations = []
     if glucose > 140:
@@ -100,8 +100,8 @@ def health_recommendations(glucose, bmi, age):
     if age > 45:
         recommendations.append("Schedule regular check-ups to monitor your diabetes risk.")
     return recommendations
-# HEALTH RECCOMENDATIONS DISPLAY
-if st.button('Predict Diabetes'):
+# HEALTH RECOMMENDATIONS DISPLAY
+if st.button('Predict Diabetes', key='predict_button_2'):
     prediction, probability = predict_diabetes(new_patient_data)
 
     st.write(f"### Prediction: {'🟢 Negative' if prediction == 0 else '🔴 Positive'}")
@@ -124,7 +124,7 @@ def explain_risk(glucose, bmi, age):
         explanation += "\n- Being older increases the risk of diabetes."
     return explanation
 
-if st.button('Predict Diabetes'):
+if st.button('Predict Diabetes', key='predict_button_3'):
     prediction, probability = predict_diabetes(new_patient_data)
 
     st.write(f"### Prediction: {'🟢 Negative' if prediction == 0 else '🔴 Positive'}")
@@ -154,7 +154,7 @@ def compare_to_medical_guidelines(glucose, bmi, age):
         comparison.append(f"BMI of {bmi} is outside the normal range of {bmi_range}.")
     return comparison
 
-if st.button('Predict Diabetes'):
+if st.button('Predict Diabetes', key='predict_button_4'):
     prediction, probability = predict_diabetes(new_patient_data)
 
     st.write(f"### Prediction: {'🟢 Negative' if prediction == 0 else '🔴 Positive'}")
@@ -165,4 +165,3 @@ if st.button('Predict Diabetes'):
     st.write("### Comparison to Medical Guidelines:")
     for c in comparison:
         st.write(f"- {c}")
-
